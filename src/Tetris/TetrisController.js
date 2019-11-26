@@ -219,7 +219,7 @@ class TetrisController {
       this.getNextShape();
     }
 
-    this.render();
+    this.redraw();
   };
 
   moveShapeLeft = () => {
@@ -228,7 +228,7 @@ class TetrisController {
     if (!this.hasCollision(newShapePosition, this.shapeRotation)) {
       this.shapePosition = [...newShapePosition];
 
-      this.render();
+      this.redraw();
     }
   };
 
@@ -238,7 +238,7 @@ class TetrisController {
     if (!this.hasCollision(newShapePosition, this.shapeRotation)) {
       this.shapePosition = [...newShapePosition];
 
-      this.render();
+      this.redraw();
     }
   };
 
@@ -249,7 +249,7 @@ class TetrisController {
     if (!this.hasCollision(this.shapePosition, newShapeRotation)) {
       this.shapeRotation = newShapeRotation;
 
-      this.render();
+      this.redraw();
     }
   };
 
@@ -266,7 +266,7 @@ class TetrisController {
     this.isSpeedUp = false;
   };
 
-  render = () => {
+  redraw = () => {
     // update the pixelMap
     const pixelMap = this.calculatePixelMap();
 
