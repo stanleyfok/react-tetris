@@ -21,6 +21,8 @@ class TetrisController {
     this.shapeRotation = 0;
     this.unclearPixelMap = this.getEmptyPixelMap();
     this.isSpeedUp = false;
+    this.isGameEnded = false;
+    this.timer = null;
   };
 
   startGame = () => {
@@ -30,15 +32,22 @@ class TetrisController {
   };
 
   endGame = () => {
-    clearTimeout(this.timer);
+    this.isGameEnded = true;
+
+    alert("Game Over!");
   };
 
   doGameTick = () => {
-    // move the block down 1 pixel
-    this.moveShapeDown();
+    if (!this.isGameEnded) {
+      // move the block down 1 pixel
+      this.moveShapeDown();
 
-    // do next tick
-    this.timer = setTimeout(this.doGameTick, this.isSpeedUp ? 200 : 500);
+      // do next tick
+      this.timer = setTimeout(this.doGameTick, this.isSpeedUp ? 200 : 500);
+    } else {
+      this.initGame();
+      this.startGame();
+    }
   };
 
   updateView = pixelMap => {
@@ -237,11 +246,7 @@ class TetrisController {
       this.shapePosition = [...newShapePosition];
     } else {
       if (this.isGameOver()) {
-        alert("Game Over!");
-
         this.endGame();
-        this.initGame();
-        this.startGame();
       } else {
         this.addShapeToUnclearPixelMap();
 
