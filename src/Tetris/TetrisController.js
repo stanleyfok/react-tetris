@@ -27,7 +27,7 @@ class TetrisController {
   startGame = () => {
     this.timer = setTimeout(this.doGameTick, 500);
 
-    this.getNextBlock();
+    this.getNextShape();
   };
 
   doGameTick = () => {
@@ -194,7 +194,7 @@ class TetrisController {
     }
   };
 
-  getNextBlock = () => {
+  getNextShape = () => {
     this.shape = this.shapeFactory.getRandomShape();
     this.shapeRotation = Math.floor(
       Math.random() * this.shape.orientations.length
@@ -216,7 +216,7 @@ class TetrisController {
       const rowsToClear = this.findRowsToClear();
       this.clearRows(rowsToClear);
 
-      this.getNextBlock();
+      this.getNextShape();
     }
 
     this.render();

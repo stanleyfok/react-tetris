@@ -30,6 +30,7 @@ class Tetris extends React.Component {
   handleKeyDown = e => {
     switch (e.keyCode) {
       case 32: // SPACE
+      case 38: // UP
         this.gameController.rotateShape();
         break;
       case 37: // LEFT

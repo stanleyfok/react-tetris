@@ -1,7 +1,7 @@
 import React from "react";
 import Tetris from "./Tetris/Tetris";
-import "./App.css";
 import tetrisBg from "./tetris-bg.mp3";
+import "./App.css";
 
 function App() {
   return (
