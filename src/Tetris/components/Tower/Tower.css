@@ -1,0 +1,8 @@
+.tower {
+  display: block;
+  width: 400px;
+  height: 800px;
+  font-size: 0;
+  outline: 2px solid #000;
+  box-sizing: border-box;
+}
