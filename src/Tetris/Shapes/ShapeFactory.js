@@ -36,8 +36,7 @@ class ShapeFactory {
       case SHAPE_TYPES.FLIP_L:
         return new FlipLShape();
       default:
-        // TODO
-        return new TShape();
+        return new BarShape();
     }
   };
 
