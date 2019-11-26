@@ -1,7 +1,6 @@
 import React from "react";
-import Tower from "./components/Tower/Tower";
+import Grid from "./components/Grid/Grid";
 
-import "./Tetris.css";
 import TetrisController from "./TetrisController";
 
 class Tetris extends React.Component {
@@ -24,6 +23,8 @@ class Tetris extends React.Component {
   componentWillUnmount() {
     document.removeEventListener("keydown", this.handleKeyDown);
     document.removeEventListener("keyup", this.handleKeyUp);
+
+    this.gameController.deregisterView();
   }
 
   handleKeyDown = e => {
@@ -46,7 +47,6 @@ class Tetris extends React.Component {
   };
 
   handleKeyUp = e => {
-    console.log("??");
     switch (e.keyCode) {
       case 40: // DOWN
         this.gameController.speedDown();
@@ -59,13 +59,7 @@ class Tetris extends React.Component {
   render() {
     const { pixelMap } = this.state;
 
-    return (
-      <div className="tetris">
-        <div className="tetris__tower-container">
-          {pixelMap && <Tower pixelMap={pixelMap} />}
-        </div>
-      </div>
-    );
+    return <div>{pixelMap && <Grid pixelMap={pixelMap} />}</div>;
   }
 }
 

@@ -1,4 +1,4 @@
-import ShapeFactory, { SHAPE_TYPES } from "./Shapes/ShapeFactory";
+import ShapeFactory from "./Shapes/ShapeFactory";
 
 const ROWS = 20;
 const COLS = 10;
@@ -9,6 +9,10 @@ class TetrisController {
 
     this.shapeFactory = new ShapeFactory();
   }
+
+  deregisterView = () => {
+    this.view = null;
+  };
 
   initGame = () => {
     // game state
@@ -27,8 +31,6 @@ class TetrisController {
   };
 
   doGameTick = () => {
-    console.log("game tick");
-
     // move the block down 1 pixel
     this.moveShapeDown();
 
@@ -36,12 +38,12 @@ class TetrisController {
     this.timer = setTimeout(this.doGameTick, this.isSpeedUp ? 200 : 500);
   };
 
-  endGame = () => {};
-
   updateView = pixelMap => {
-    this.view.setState({
-      pixelMap
-    });
+    if (this.view) {
+      this.view.setState({
+        pixelMap
+      });
+    }
   };
 
   getEmptyPixelMap = () => {

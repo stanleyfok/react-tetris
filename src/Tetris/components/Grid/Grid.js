@@ -2,9 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import Pixel from "../Pixel/Pixel";
 
-import "./Tower.css";
+import "./Grid.css";
 
-function Tower(props) {
+function Grid(props) {
   const { rows, cols, pixelMap } = props;
 
   const pixelRows = [];
@@ -26,18 +26,18 @@ function Tower(props) {
     pixelRows.push(<div key={`row-${i}`}>{pixelCols}</div>);
   }
 
-  return <div className="tower">{pixelRows}</div>;
+  return <div className="grid">{pixelRows}</div>;
 }
 
-Tower.propTypes = {
+Grid.propTypes = {
   rows: PropTypes.number,
   cols: PropTypes.number,
   pixelMap: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.bool)).isRequired
 };
 
-Tower.defaultProps = {
+Grid.defaultProps = {
   rows: 20,
   cols: 10
 };
 
-export default Tower;
+export default Grid;
