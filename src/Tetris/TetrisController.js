@@ -21,13 +21,16 @@ class TetrisController {
     this.shapeRotation = 0;
     this.unclearPixelMap = this.getEmptyPixelMap();
     this.isSpeedUp = false;
-    this.timer = null;
   };
 
   startGame = () => {
     this.timer = setTimeout(this.doGameTick, 500);
 
     this.getNextShape();
+  };
+
+  endGame = () => {
+    clearTimeout(this.timer);
   };
 
   doGameTick = () => {
@@ -159,6 +162,28 @@ class TetrisController {
     return false;
   };
 
+  isGameOver = () => {
+    const orientation = this.shape.orientations[this.shapeRotation];
+    const size = this.shape.size;
+    const y = this.shapePosition[1];
+
+    for (var i = 0; i < size; i++) {
+      for (var j = 0; j < size; j++) {
+        // only check if the pixel on the shape is filled
+        if (orientation[i][j] === 1) {
+          const actualY = y + i;
+
+          // ignore if still above the top
+          if (actualY < 0) {
+            return true;
+          }
+        }
+      }
+    }
+
+    return false;
+  };
+
   findRowsToClear = () => {
     const rowsToClear = [];
 
@@ -201,7 +226,7 @@ class TetrisController {
     );
     this.shapePosition = [
       Math.floor((COLS - this.shape.size) / 2), // middle of tower
-      -1 // top of tower
+      -this.shape.size // top of tower
     ];
   };
 
@@ -211,12 +236,20 @@ class TetrisController {
     if (!this.hasCollision(newShapePosition, this.shapeRotation)) {
       this.shapePosition = [...newShapePosition];
     } else {
-      this.addShapeToUnclearPixelMap();
+      if (this.isGameOver()) {
+        alert("Game Over!");
 
-      const rowsToClear = this.findRowsToClear();
-      this.clearRows(rowsToClear);
+        this.endGame();
+        this.initGame();
+        this.startGame();
+      } else {
+        this.addShapeToUnclearPixelMap();
 
-      this.getNextShape();
+        const rowsToClear = this.findRowsToClear();
+        this.clearRows(rowsToClear);
+
+        this.getNextShape();
+      }
     }
 
     this.redraw();
