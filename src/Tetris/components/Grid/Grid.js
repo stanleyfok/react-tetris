@@ -12,15 +12,7 @@ function Grid(props) {
     const pixelCols = [];
 
     for (var j = 0; j < cols; j++) {
-      var isFilled;
-
-      try {
-        isFilled = pixelMap[i][j];
-      } catch {
-        isFilled = false;
-      }
-
-      pixelCols.push(<Pixel key={`${i},${j}`} isFilled={isFilled} />);
+      pixelCols.push(<Pixel key={`${i},${j}`} isFilled={pixelMap[i][j]} />);
     }
 
     pixelRows.push(<div key={`row-${i}`}>{pixelCols}</div>);

@@ -1,18 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
-import classNames from "classnames";
 
 import "./Pixel.css";
 
 function Pixel(props) {
   const { isFilled } = props;
 
-  const pixelClass = classNames({
-    pixel: true,
-    "pixel--filled": isFilled
-  });
+  const classNames = ["pixel"];
+  if (isFilled) {
+    classNames.push("pixel--filled");
+  }
 
-  return <div className={pixelClass}></div>;
+  return <div className={classNames.join(" ")}></div>;
 }
 
 Pixel.propTypes = {
