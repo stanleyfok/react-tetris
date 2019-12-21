@@ -62,15 +62,13 @@ class Tetris extends React.Component {
 Tetris.propTypes = {
   rows: PropTypes.number.isRequired,
   cols: PropTypes.number.isRequired,
-  tickInterval: PropTypes.number.isRequired,
-  speedUpSpeed: PropTypes.number.isRequired
+  tickInterval: PropTypes.number.isRequired
 };
 
 Tetris.defaultProps = {
   rows: 20,
   cols: 10,
-  tickInterval: 400,
-  speedUpSpeed: 5
+  tickInterval: 400
 };
 
 export default Tetris;
