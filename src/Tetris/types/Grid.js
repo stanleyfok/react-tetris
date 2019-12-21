@@ -25,6 +25,8 @@ class Grid {
 
       this.map.push(col);
     }
+
+    return this;
   }
 
   copyMap(grid) {
@@ -33,6 +35,8 @@ class Grid {
         this.map[i][j] = grid.map[i][j];
       }
     }
+
+    return this;
   }
 
   addShape(shape) {
@@ -58,6 +62,8 @@ class Grid {
         }
       }
     }
+
+    return this;
   }
 
   hasCollision(shape) {
@@ -98,13 +104,13 @@ class Grid {
   }
 
   clearFullRows() {
-    const rowsToClear = this.findRowsToClear();
-    this.clearRows(rowsToClear);
+    return this.clearFullRowsFromGridMap().padRowsToGridMap();
   }
 
-  findRowsToClear = () => {
+  clearFullRowsFromGridMap = () => {
     const rowsToClear = [];
 
+    // find unwanted rows to clear
     for (var i = 0; i < this.rows; i++) {
       var isRowFull = true;
       for (var j = 0; j < this.cols; j++) {
@@ -116,17 +122,19 @@ class Grid {
       }
     }
 
-    return rowsToClear;
-  };
-
-  clearRows = rowsToClear => {
     // clear unwanted rows
-    for (var i = rowsToClear.length - 1; i >= 0; i--) {
+    for (i = rowsToClear.length - 1; i >= 0; i--) {
       this.map.splice(rowsToClear[i], 1);
     }
 
+    return this;
+  };
+
+  padRowsToGridMap = () => {
+    const rowsToPad = this.rows - this.map.length;
+
     // append empty rows back
-    for (var m = 0; m < rowsToClear.length; m++) {
+    for (var m = 0; m < rowsToPad; m++) {
       const col = [];
 
       for (var n = 0; n < this.cols; n++) {
@@ -135,6 +143,8 @@ class Grid {
 
       this.map.unshift(col);
     }
+
+    return this;
   };
 }
 

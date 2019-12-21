@@ -13,15 +13,21 @@ class Shape {
   move(vector) {
     this.position[0] += vector[0];
     this.position[1] += vector[1];
+
+    return this;
   }
 
   rotateClockwise() {
     this.rotation = (this.rotation + 1) % this.orientations.length;
+
+    return this;
   }
 
   rotateAntiClockwise() {
     this.rotation =
       (this.rotation - 1 + this.orientations.length) % this.orientations.length;
+
+    return this;
   }
 }
 

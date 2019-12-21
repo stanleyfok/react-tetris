@@ -64,9 +64,7 @@ class TetrisController {
       if (this.shape.position[1] < 0) {
         this.endGame();
       } else {
-        this.unclearedGrid.addShape(this.shape);
-
-        this.unclearedGrid.clearFullRows();
+        this.unclearedGrid.addShape(this.shape).clearFullRows();
 
         this.getNextShape();
       }
@@ -110,8 +108,7 @@ class TetrisController {
 
   redraw = () => {
     // update the display grid
-    this.displayGrid = this.unclearedGrid.clone();
-    this.displayGrid.addShape(this.shape);
+    this.displayGrid = this.unclearedGrid.clone().addShape(this.shape);
 
     // update the view with game state
     if (this.view) {
