@@ -6,8 +6,6 @@ import SShape from "./SShape";
 import TShape from "./TShape";
 import ZShape from "./ZShape";
 
-export const TOTAL_SHAPES = 7;
-
 export const SHAPE_TYPES = {
   SQUARE: 0,
   T: 1,
@@ -19,8 +17,8 @@ export const SHAPE_TYPES = {
 };
 
 class ShapeFactory {
-  static getShape = shape => {
-    switch (shape) {
+  static getShapeByType = type => {
+    switch (type) {
       case SHAPE_TYPES.SQUARE:
         return new SquareShape();
       case SHAPE_TYPES.T:
@@ -41,9 +39,10 @@ class ShapeFactory {
   };
 
   static getRandomShape = () => {
-    const shape = Math.floor(Math.random() * TOTAL_SHAPES);
+    const totalShapes = Object.keys(SHAPE_TYPES).length;
+    const shape = Math.floor(Math.random() * totalShapes);
 
-    return this.getShape(shape);
+    return this.getShapeByType(shape);
   };
 }
 
