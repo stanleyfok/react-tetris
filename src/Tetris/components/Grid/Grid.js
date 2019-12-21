@@ -5,14 +5,14 @@ import Pixel from "../Pixel/Pixel";
 import "./Grid.css";
 
 function Grid(props) {
-  const { rows, cols, pixelMap } = props;
+  const { rows, cols, map } = props.grid;
 
   const pixelRows = [];
   for (var i = 0; i < rows; i++) {
     const pixelCols = [];
 
     for (var j = 0; j < cols; j++) {
-      pixelCols.push(<Pixel key={`${i},${j}`} isFilled={pixelMap[i][j]} />);
+      pixelCols.push(<Pixel key={`${i},${j}`} isFilled={map[i][j]} />);
     }
 
     pixelRows.push(<div key={`row-${i}`}>{pixelCols}</div>);
@@ -22,14 +22,7 @@ function Grid(props) {
 }
 
 Grid.propTypes = {
-  rows: PropTypes.number,
-  cols: PropTypes.number,
-  pixelMap: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.bool)).isRequired
-};
-
-Grid.defaultProps = {
-  rows: 20,
-  cols: 10
+  grid: PropTypes.object.isRequired
 };
 
 export default Grid;

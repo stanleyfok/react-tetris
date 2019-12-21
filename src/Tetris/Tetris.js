@@ -15,7 +15,6 @@ class Tetris extends React.Component {
       cols,
       tickInterval
     });
-    this.gameController.initGame();
 
     this.state = {};
   }
@@ -53,9 +52,9 @@ class Tetris extends React.Component {
   };
 
   render() {
-    const { pixelMap } = this.state;
+    const { displayGrid } = this.state;
 
-    return <div>{pixelMap && <Grid pixelMap={pixelMap} />}</div>;
+    return <div>{displayGrid && <Grid grid={displayGrid} />}</div>;
   }
 }
 

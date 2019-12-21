@@ -19,7 +19,7 @@ export const SHAPE_TYPES = {
 };
 
 class ShapeFactory {
-  getShape = shape => {
+  static getShape = shape => {
     switch (shape) {
       case SHAPE_TYPES.SQUARE:
         return new SquareShape();
@@ -40,7 +40,7 @@ class ShapeFactory {
     }
   };
 
-  getRandomShape = () => {
+  static getRandomShape = () => {
     const shape = Math.floor(Math.random() * TOTAL_SHAPES);
 
     return this.getShape(shape);
