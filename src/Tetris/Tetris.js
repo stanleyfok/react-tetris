@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Grid from "./components/Grid/Grid";
 
 import TetrisController from "./TetrisController";
@@ -7,7 +8,13 @@ class Tetris extends React.Component {
   constructor(props) {
     super(props);
 
-    this.gameController = new TetrisController(this);
+    const { rows, cols, tickInterval } = props;
+
+    this.gameController = new TetrisController(this, {
+      rows,
+      cols,
+      tickInterval
+    });
     this.gameController.initGame();
 
     this.state = {};
@@ -17,12 +24,10 @@ class Tetris extends React.Component {
     this.gameController.startGame();
 
     document.addEventListener("keydown", this.handleKeyDown);
-    document.addEventListener("keyup", this.handleKeyUp);
   }
 
   componentWillUnmount() {
     document.removeEventListener("keydown", this.handleKeyDown);
-    document.removeEventListener("keyup", this.handleKeyUp);
 
     this.gameController.deregisterView();
   }
@@ -40,17 +45,7 @@ class Tetris extends React.Component {
         this.gameController.moveShapeRight();
         break;
       case 40: // DOWN
-        this.gameController.speedUp();
-        break;
-      default:
-        break;
-    }
-  };
-
-  handleKeyUp = e => {
-    switch (e.keyCode) {
-      case 40: // DOWN
-        this.gameController.speedDown();
+        this.gameController.moveShapeDown();
         break;
       default:
         break;
@@ -63,5 +58,19 @@ class Tetris extends React.Component {
     return <div>{pixelMap && <Grid pixelMap={pixelMap} />}</div>;
   }
 }
+
+Tetris.propTypes = {
+  rows: PropTypes.number.isRequired,
+  cols: PropTypes.number.isRequired,
+  tickInterval: PropTypes.number.isRequired,
+  speedUpSpeed: PropTypes.number.isRequired
+};
+
+Tetris.defaultProps = {
+  rows: 20,
+  cols: 10,
+  tickInterval: 400,
+  speedUpSpeed: 5
+};
 
 export default Tetris;

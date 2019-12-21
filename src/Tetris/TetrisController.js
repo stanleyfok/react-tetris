@@ -1,13 +1,15 @@
 import ShapeFactory from "./Shapes/ShapeFactory";
 
-const ROWS = 20;
-const COLS = 10;
-
 class TetrisController {
-  constructor(view) {
+  constructor(view, options) {
+    const { rows, cols, tickInterval, speedUpSpeed } = options;
     this.view = view;
 
     this.shapeFactory = new ShapeFactory();
+    this.rows = rows;
+    this.cols = cols;
+    this.tickInterval = tickInterval;
+    this.speedUpSpeed = speedUpSpeed;
   }
 
   deregisterView = () => {
@@ -43,7 +45,7 @@ class TetrisController {
       this.moveShapeDown();
 
       // do next tick
-      this.timer = setTimeout(this.doGameTick, this.isSpeedUp ? 200 : 500);
+      this.timer = setTimeout(this.doGameTick, this.tickInterval);
     } else {
       this.initGame();
       this.startGame();
@@ -61,10 +63,10 @@ class TetrisController {
   getEmptyPixelMap = () => {
     const pixelMap = [];
 
-    for (var i = 0; i < ROWS; i++) {
+    for (var i = 0; i < this.rows; i++) {
       const col = [];
 
-      for (var j = 0; j < COLS; j++) {
+      for (var j = 0; j < this.cols; j++) {
         col.push(false);
       }
 
@@ -88,9 +90,9 @@ class TetrisController {
 
           if (
             actualX >= 0 &&
-            actualX < COLS &&
+            actualX < this.cols &&
             actualY >= 0 &&
-            actualY < ROWS
+            actualY < this.rows
           ) {
             this.unclearPixelMap[actualY][actualX] = true;
           }
@@ -105,8 +107,8 @@ class TetrisController {
     const size = this.shape.size;
     const [x, y] = this.shapePosition;
 
-    for (var i = 0; i < ROWS; i++) {
-      for (var j = 0; j < COLS; j++) {
+    for (var i = 0; i < this.rows; i++) {
+      for (var j = 0; j < this.cols; j++) {
         pixelMap[i][j] = this.unclearPixelMap[i][j];
       }
     }
@@ -120,9 +122,9 @@ class TetrisController {
 
           if (
             actualX >= 0 &&
-            actualX < COLS &&
+            actualX < this.cols &&
             actualY >= 0 &&
-            actualY < ROWS
+            actualY < this.rows
           ) {
             pixelMap[actualY][actualX] = true;
           }
@@ -151,12 +153,12 @@ class TetrisController {
           }
 
           // check if hitting the bottom wall
-          if (actualY >= ROWS) {
+          if (actualY >= this.rows) {
             return true;
           }
 
           // check if hitting the left and right walls
-          if (actualX < 0 || actualX >= COLS) {
+          if (actualX < 0 || actualX >= this.cols) {
             return true;
           }
 
@@ -196,9 +198,9 @@ class TetrisController {
   findRowsToClear = () => {
     const rowsToClear = [];
 
-    for (var i = 0; i < ROWS; i++) {
+    for (var i = 0; i < this.rows; i++) {
       var isRowFull = true;
-      for (var j = 0; j < COLS; j++) {
+      for (var j = 0; j < this.cols; j++) {
         isRowFull &= this.unclearPixelMap[i][j];
       }
 
@@ -220,7 +222,7 @@ class TetrisController {
     for (var m = 0; m < rowsToClear.length; m++) {
       const col = [];
 
-      for (var n = 0; n < COLS; n++) {
+      for (var n = 0; n < this.cols; n++) {
         col.push(false);
       }
 
@@ -234,7 +236,7 @@ class TetrisController {
       Math.random() * this.shape.orientations.length
     );
     this.shapePosition = [
-      Math.floor((COLS - this.shape.size) / 2), // middle of tower
+      Math.floor((this.cols - this.shape.size) / 2), // middle of tower
       -this.shape.size // top of tower
     ];
   };
@@ -289,19 +291,6 @@ class TetrisController {
 
       this.redraw();
     }
-  };
-
-  speedUp = () => {
-    this.isSpeedUp = true;
-
-    clearTimeout(this.timer);
-
-    // schedule anotehr game tick
-    this.doGameTick();
-  };
-
-  speedDown = () => {
-    this.isSpeedUp = false;
   };
 
   redraw = () => {
